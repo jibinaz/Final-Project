@@ -1,26 +1,22 @@
-import React from 'react'
+"use client";
+import React from "react";
+import { useRouter } from "next/navigation";
 
 const getStarted = () => {
+  const router = useRouter();
   return (
-<div className="flex justify-center items-center gap-12 h-full">
-  <div
-    className="bg-gradient-to-b from-gray-800/40 to-transparent p-[4px] rounded-[16px]"
-  >
-    <button
-      className="group p-[4px] rounded-[12px] bg-gradient-to-b from-gray-700 to-gray-600 shadow-[0_2px_4px_rgba(0,0,0,0.7)] hover:shadow-[0_4px_8px_rgba(0,0,0,0.6)] active:shadow-[0_0px_1px_rgba(0,0,0,0.8)] active:scale-[0.995] transition-all duration-200"
-    >
-      <div
-        className="bg-gradient-to-b from-gray-600 to-gray-700 rounded-[8px] px-3 py-2"
-      >
-        <div className="flex gap-2 items-center">
-          <span className=" text-lg text-white">Get Started</span>
-        </div>
+    <div className="flex justify-center items-center gap-12 h-full">
+      <div className="bg-gradient-to-b from-gray-800/40 to-transparent p-[4px] rounded-[16px] ">
+        <button
+          onClick={() => router.push("/map")}
+          className="relative min-w-[120px] cursor-pointer rounded-md border-0 bg-gradient-to-b from-gray-700 to-gray-900 p-[12px_17px] text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)] transition-all duration-800 ease-[cubic-bezier(0.15,0.83,0.66,1)] hover:scale-110 hover:-translate-y-1 hover:text-white"
+        >
+          <span className="absolute bottom-0 left-[15%] h-[1px] w-[70%] bg-gradient-to-r from-transparent via-white to-transparent opacity-20 transition-all duration-1000 ease-[cubic-bezier(0.15,0.83,0.66,1)] hover:opacity-100"></span>
+          <strong>Get Started</strong>
+        </button>
       </div>
-    </button>
-  </div>
-</div>
+    </div>
+  );
+};
 
-  )
-}
-
-export default getStarted
+export default getStarted;
