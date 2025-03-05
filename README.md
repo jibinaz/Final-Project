@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Collecting workspace informationHere is a proper setup for your project, including the folder structure and instructions on how to set up and run the project:
 
-## Getting Started
+```markdown
+# WildEye Project Setup
 
-First, run the development server:
+This project is built using Next.js for the frontend and Flask for the backend. Follow the instructions below to set up and run the project.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Folder Structure
+
+```
+.
+├── .gitignore
+├── .next/
+├── app/
+│   ├── aboutus/
+│   ├── components/
+│   ├── favicon.ico
+│   ├── globals.css
+│   ├── help/
+│   ├── layout.js
+│   ├── map/
+│   ├── page.js
+├── backend/
+│   ├── app.py
+├── eslint.config.mjs
+├── jsconfig.json
+├── next.config.mjs
+├── package.json
+├── postcss.config.mjs
+├── public/
+│   ├── assets/
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── next.svg
+├── README.md
+├── requirements.txt
+├── tailwind.config.mjs
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Prerequisites
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- Node.js (v14 or higher)
+- Python (v3.6 or higher)
+- npm (v6 or higher) or yarn
+- Flask (v2.0 or higher)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Setup Instructions
 
-## Learn More
+### Frontend (Next.js)
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the repository:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```sh
+   git clone <repository-url>
+   cd animal-detect/Final-Project
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Install dependencies:**
 
-## Deploy on Vercel
+   ```sh
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Run the development server:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   ```sh
+   npm run dev
+   ```
+
+   The frontend should now be running at `http://localhost:3000`.
+
+### Backend (Flask)
+
+1. **Navigate to the backend directory:**
+
+   ```sh
+   cd backend
+   ```
+
+2. **Create a virtual environment:**
+
+   ```sh
+   python -m venv venv
+   ```
+
+3. **Activate the virtual environment:**
+
+   - On Windows:
+
+     ```sh
+     venv\Scripts\activate
+     ```
+
+   - On macOS/Linux:
+
+     ```sh
+     source venv/bin/activate
+     ```
+
+4. **Install dependencies:**
+
+   ```sh
+   pip install -r requirements.txt
+   ```
+
+5. **Run the Flask server:**
+
+   ```sh
+   python app.py
+   ```
+
+   The backend should now be running at `http://127.0.0.1:5000`.
+
+## Demo
+
+1. **Start both the frontend and backend servers as described above.**
+
+2. **Open your browser and navigate to `http://localhost:3000`.**
+
+3. **Explore the application:**
+   - Visit the homepage to see the main features.
+   - Navigate to the "About Us" page to learn more about the project.
+   - Use the map feature to see real-time updates from the Flask backend.
+
+## Additional Notes
+
+- The frontend uses Tailwind CSS for styling.
+- The backend provides a simple API to update and fetch camera locations.
+- Ensure both servers are running simultaneously for the full functionality of the application.
+
+Enjoy exploring WildEye!
+```
+
+This setup guide provides a comprehensive overview of the project structure and step-by-step instructions to set up and run both the frontend and backend.
+This setup guide provides a comprehensive overview of the project structure and step-by-step instructions to set up and run both the frontend and backend.
