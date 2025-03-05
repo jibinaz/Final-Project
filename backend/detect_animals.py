@@ -4,11 +4,10 @@ import numpy as np
 import serial
 import requests
 from ultralytics import YOLO
-import json
 import threading
 
 # Load YOLOv8 model
-model = YOLO(r"C:\Users\Lachhu\Documents\chakka\best.pt")
+model = YOLO("best.pt")
 
 # ESP32-CAM URL (Replace with actual IP)
 ESP32_CAM_URL = "http://192.168.96.1:81/stream"
@@ -17,7 +16,7 @@ ESP32_CAM_URL = "http://192.168.96.1:81/stream"
 FLASK_SERVER_URL = "http://127.0.0.1:5000/update"
 
 # Set up serial communication with ESP32
-ser = serial.Serial('COM7', 115200, timeout=1)
+# ser = serial.Serial('COM7', 115200, timeout=1)
 time.sleep(2)  # Allow time for serial connection
 
 # Define camera sources
@@ -76,10 +75,10 @@ def detect_animals():
             current_time = time.time()
             
             # Display camera feeds continuously
-            # for cam in cameras:
-            #     if cam["frame"] is not None:
-            #         display_frame = cam["frame"].copy()
-            #         cv2.imshow(cam["name"], display_frame)
+            for cam in cameras:
+                if cam["frame"] is not None:
+                    display_frame = cam["frame"].copy()
+                    cv2.imshow(cam["name"], display_frame)
             
             # Process detections every 5 seconds
             if current_time - last_detection_time >= 5:
@@ -105,11 +104,11 @@ def detect_animals():
                                 class_id = int(box.cls[0])
                                 confidence = box.conf[0]
                                 detected_animal = model.names[class_id].lower()
-                                # x1, y1, x2, y2 = map(int, box.xyxy[0])
-                                # color = (0, 0, 255) if detected_animal in ["tiger", "elephant"] else (0, 255, 0)
-                                # cv2.rectangle(detection_frame, (x1, y1), (x2, y2), color, 2)
-                                # cv2.putText(detection_frame, f"{detected_animal} ({confidence:.2f})", (x1, y1 - 10),
-                                            # cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+                                x1, y1, x2, y2 = map(int, box.xyxy[0])
+                                color = (0, 0, 255) if detected_animal in ["tiger", "elephant"] else (0, 255, 0)
+                                cv2.rectangle(detection_frame, (x1, y1), (x2, y2), color, 2)
+                                cv2.putText(detection_frame, f"{detected_animal} ({confidence:.2f})", (x1, y1 - 10),
+                                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
                                 if detected_animal in ["tiger", "elephant"]:
                                     animal_detected = True
                         
@@ -123,7 +122,8 @@ def detect_animals():
                 
                 # Send data to Flask server
                 try:
-                    requests.post(FLASK_SERVER_URL, json={"detections": detection_results})
+                    response = requests.post(FLASK_SERVER_URL, json={"detections": detection_results})
+                    print(f"[INFO] Server response code: {response.status_code}")
                 except requests.RequestException:
                     print("[ERROR] Could not send detection results to server")
                 

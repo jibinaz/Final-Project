@@ -7,9 +7,26 @@ app = Flask(__name__)
 CORS(app)
 
 # Store multiple camera locations and their detection status
+
+class Camera:
+    def __init__(self, id, latitude, longitude):
+        self.id = id
+        self.latitude = latitude
+        self.longitude = longitude
+        self.animal_detected = False
+    
+    def to_json(self):
+        return {
+            "id": self.id,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "animal_detected": self.animal_detected
+        }
+
+# Initialize camera objects
 camera_locations = [
-    {"id": 0, "latitude": 9.963668, "longitude": 76.409627, "animal_detected": False},  # ESP32-CAM
-    {"id": 1, "latitude": 9.964500, "longitude": 76.410500, "animal_detected": False},  # Laptop Webcam
+    Camera(0, 9.963668, 76.409627),  # ESP32-CAM
+    Camera(1, 9.964500, 76.410500),  # Laptop Webcam
 ]
 
 # ESP32-CAM Stream URL
@@ -53,10 +70,11 @@ def update_detection():
     """Update detection status for a camera."""
     data = request.json
     
+    print(data)
     # Handle detection results format
     if "detections" in data:
         detection_results = data["detections"]
-        updated_cameras = []
+        # updated_cameras = []
         
         for detection in detection_results:
             if "camera_id" in detection and "status" in detection:
@@ -65,29 +83,29 @@ def update_detection():
                 
                 # Find the camera and update its status
                 for cam in camera_locations:
-                    if cam["id"] == camera_id:
-                        # Set animal_detected based on status
-                        # TRUE if status is "DETECTED", FALSE for "NO_DETECTION" or "ERROR"
-                        animal_detected = status == "DETECTED"
-                        
-                        
-
-                        # Only update if the status changes
-                        if cam["animal_detected"] != animal_detected:
-                            cam["animal_detected"] = animal_detected
-                            print(f"[UPDATE] Camera {cam['id']} detection status changed to {animal_detected}")
-                        
-                        updated_cameras.append(cam["id"])
+                    if cam.id == camera_id:
+                        if status == "CLEAR":
+                            cam.animal_detected = False
+                        if status == "DANGER":
+                            cam.animal_detected = True
+                        if status == "ERROR":
+                            cam.animal_detected = False
                         break
         
-        print(f"[UPDATE] Updated cameras: {updated_cameras}")
+        print("[UPDATE] Updated camera status")
+    
+    return jsonify({"success": True}), 200
           
 
 
 @app.route("/status", methods=["GET"])
 def get_status():
+    values = [camera.to_json() for camera in camera_locations]
+    print(values)
     """Fetch the status of camera detections."""
-    return jsonify({"camera_locations": camera_locations}), 200
+    return jsonify({
+        "camera_locations": [camera.to_json() for camera in camera_locations]
+    }), 200
 
 
 if __name__ == "__main__":
