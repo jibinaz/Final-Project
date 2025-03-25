@@ -10,7 +10,7 @@ import threading
 model = YOLO("best.pt")
 
 # ESP32-CAM URL (Replace with actual IP)
-ESP32_CAM_URL = "http://192.168.96.1:81/stream"
+ESP32_CAM_URL = "http://192.168.135.181/stream"
 
 # Flask server URL
 FLASK_SERVER_URL = "http://127.0.0.1:5000/update"

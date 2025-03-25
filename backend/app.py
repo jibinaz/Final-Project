@@ -6,8 +6,6 @@ import requests
 app = Flask(__name__)
 CORS(app)
 
-# Store multiple camera locations and their detection status
-
 class Camera:
     def __init__(self, id, latitude, longitude):
         self.id = id
@@ -23,17 +21,16 @@ class Camera:
             "animal_detected": self.animal_detected
         }
 
-# Initialize camera objects
 camera_locations = [
-    Camera(0, 9.963668, 76.409627),  # ESP32-CAM
-    Camera(1, 9.964500, 76.410500),  # Laptop Webcam
+    Camera(0, 9.963668, 76.409627),  
+    Camera(1, 9.964500, 76.410500),  
 ]
 
-# ESP32-CAM Stream URL
-ESP32_STREAM_URL = "http://192.168.96.1:81/stream"
 
-# Laptop Webcam
-cap = cv2.VideoCapture(0)  # 0 -> Default webcam
+ESP32_STREAM_URL = "http://192.168.135.1:81/stream"
+
+
+cap = cv2.VideoCapture(0)  
 
 
 def generate_webcam_feed():
