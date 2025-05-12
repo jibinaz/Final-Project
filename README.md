@@ -114,7 +114,7 @@ npm run dev
 
 ```md
 ![Live Map Interface](./public/assets/map-ui.png)
-![Wild Animal Detection](./public/assets/detection.jpg)
+![Wild Animal Detection](./public/assets/detection.png)
 ```
 
 ---
